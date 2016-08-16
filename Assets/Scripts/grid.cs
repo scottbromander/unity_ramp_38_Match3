@@ -37,7 +37,7 @@ public class Grid : MonoBehaviour {
 
 		for (int x = 0; x < xDim; x++) {
 			for (int y = 0; y < yDim; y++) {
-				GameObject background = (GameObject)Instantiate (backgroundPrefab, new Vector3(x, y, 0), Quaternion.identity);
+				GameObject background = (GameObject)Instantiate (backgroundPrefab, GetWorldPosition(x, y), Quaternion.identity);
 				background.transform.parent = transform;
 			}
 		}
@@ -45,7 +45,7 @@ public class Grid : MonoBehaviour {
 		pieces = new GameObject[xDim, yDim];
 		for (int x = 0; x < xDim; x++) {
 			for (int y = 0; y < yDim; y++) {
-				pieces [x, y] = (GameObject)Instantiate (piecePrefabDict [PieceType.NORMAL], new Vector3 (x, y, 0), Quaternion.identity);
+				pieces [x, y] = (GameObject)Instantiate (piecePrefabDict [PieceType.NORMAL], GetWorldPosition(x, y), Quaternion.identity);
 				pieces [x, y].name = "Piece(" + x + "," + y + ")";
 				pieces [x, y].transform.parent = transform;
 			}
@@ -55,5 +55,10 @@ public class Grid : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	Vector2 GetWorldPosition(int x, int y){
+		return new Vector2 (transform.position.x - xDim / 2.0f + x,
+			transform.position.y + yDim / 2.0f - y);
 	}
 }

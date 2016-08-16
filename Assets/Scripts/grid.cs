@@ -23,6 +23,8 @@ public class Grid : MonoBehaviour {
 
 	private Dictionary<PieceType, GameObject> piecePrefabDict;
 
+	private GameObject[,] pieces;
+
 	// Use this for initialization
 	void Start () {
 		piecePrefabDict = new Dictionary<PieceType, GameObject> ();
@@ -37,6 +39,15 @@ public class Grid : MonoBehaviour {
 			for (int y = 0; y < yDim; y++) {
 				GameObject background = (GameObject)Instantiate (backgroundPrefab, new Vector3(x, y, 0), Quaternion.identity);
 				background.transform.parent = transform;
+			}
+		}
+
+		pieces = new GameObject[xDim, yDim];
+		for (int x = 0; x < xDim; x++) {
+			for (int y = 0; y < yDim; y++) {
+				pieces [x, y] = (GameObject)Instantiate (piecePrefabDict [PieceType.NORMAL], new Vector3 (x, y, 0), Quaternion.identity);
+				pieces [x, y].name = "Piece(" + x + "," + y + ")";
+				pieces [x, y].transform.parent = transform;
 			}
 		}
 	}

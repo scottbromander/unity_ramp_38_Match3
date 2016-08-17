@@ -23,7 +23,7 @@ public class Grid : MonoBehaviour {
 
 	private Dictionary<PieceType, GameObject> piecePrefabDict;
 
-	private GameObject[,] pieces;
+	private GamePiece[,] pieces;
 
 	// Use this for initialization
 	void Start () {
@@ -42,12 +42,15 @@ public class Grid : MonoBehaviour {
 			}
 		}
 
-		pieces = new GameObject[xDim, yDim];
+		pieces = new GamePiece[xDim, yDim];
 		for (int x = 0; x < xDim; x++) {
 			for (int y = 0; y < yDim; y++) {
-				pieces [x, y] = (GameObject)Instantiate (piecePrefabDict [PieceType.NORMAL], GetWorldPosition(x, y), Quaternion.identity);
-				pieces [x, y].name = "Piece(" + x + "," + y + ")";
-				pieces [x, y].transform.parent = transform;
+				GameObject newPiece = (GameObject)Instantiate (piecePrefabDict [PieceType.NORMAL], GetWorldPosition(x, y), Quaternion.identity);
+				newPiece.name = "Piece(" + x + "," + y + ")";
+				newPiece.transform.parent = transform;
+
+				pieces [x, y] = newPiece.GetComponent<GamePiece> ();
+				pieces [x, y].Init (x, y, this, PieceType.NORMAL);
 			}
 		}
 	}

@@ -9,11 +9,21 @@ public class GamePiece : MonoBehaviour {
 	public int X
 	{
 		get { return x; }
+		set {
+			if (IsMoveable()) {
+				x = value;
+			}
+		}
 	}
 
 	public int Y
 	{
 		get { return y; }
+		set {
+			if (IsMoveable()){
+				y = value;
+			}
+		}
 	}
 
 	private Grid.PieceType type;
@@ -28,6 +38,16 @@ public class GamePiece : MonoBehaviour {
 	public Grid GridRef 
 	{
 		get { return grid; }
+	}
+
+	private MoveablePiece moveableComponent;
+
+	public MoveablePiece MoveableComponent {
+		get { return moveableComponent; }
+	}
+
+	void Awake(){
+		moveableComponent = GetComponent<MoveablePiece> ();
 	}
 
 	public void Init(int _x, int _y, Grid _grid, Grid.PieceType _type) {
@@ -45,5 +65,9 @@ public class GamePiece : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	public bool IsMoveable() {
+		return moveableComponent != null;
 	}
 }
